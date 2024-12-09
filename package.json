@@ -22,6 +22,10 @@
     "type": "git",
     "url": ""
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "keywords": [],
   "author": "test",
   "license": "Apache-2.0",
