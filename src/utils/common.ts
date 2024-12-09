@@ -409,5 +409,5 @@ export function buildTickDataByEvent(fields: any): TickData {
 }
 
 export function buildClmmPositionName(pool_index: number, position_index: number): string {
-  return `Cetus LP | Pool${pool_index}-${position_index}`
+  return `Magma LP | Pool${pool_index}-${position_index}`
 }

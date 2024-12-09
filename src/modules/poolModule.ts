@@ -29,7 +29,7 @@ import {
   SuiObjectIdType,
   SuiResource,
 } from '../types/sui'
-import { CetusClmmSDK } from '../sdk'
+import { MagmaClmmSDK } from '../sdk'
 import { IModule } from '../interfaces/IModule'
 import { getObjectPreviousTransactionDigest } from '../utils/objects'
 import {
@@ -51,11 +51,11 @@ type GetTickParams = {
  * Helper class to help interact with clmm pools with a pool router interface.
  */
 export class PoolModule implements IModule {
-  protected _sdk: CetusClmmSDK
+  protected _sdk: MagmaClmmSDK
 
   private readonly _cache: Record<string, CachedContent> = {}
 
-  constructor(sdk: CetusClmmSDK) {
+  constructor(sdk: MagmaClmmSDK) {
     this._sdk = sdk
   }
 

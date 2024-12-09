@@ -1,7 +1,7 @@
 {
   "name": "@magmaprotocol/magma-sui-clmm-sdk",
   "version": "0.1.0",
-  "description": "SDK for cetus swap and liquidity",
+  "description": "SDK for magma swap and liquidity",
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -13,7 +13,7 @@
     "prepare": "husky install",
     "build:tsup": "npm run build:clean && npm run _build:node",
     "build:clean": "rm -rf dist",
-    "_build:browser": "tsup --platform browser --format iife --global-name cetusAptosSDK --minify",
+    "_build:browser": "tsup --platform browser --format iife --global-name magmaAptosSDK --minify",
     "_build:node": "tsup --format cjs,esm --dts",
     "build:doc": "npx typedoc",
     "publish:test": "node version.js && npm publish --tag experimental"

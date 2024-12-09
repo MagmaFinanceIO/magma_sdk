@@ -1,9 +1,9 @@
 import { SuiObjectIdType } from './sui'
 
 /**
- * Represents configurations specific to the Cetus protocol.
+ * Represents configurations specific to the Magma protocol.
  */
-export type CetusConfigs = {
+export type MagmaConfigs = {
   /**
    * The object identifier of the coin list.
    */

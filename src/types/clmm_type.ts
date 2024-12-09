@@ -42,7 +42,7 @@ export type Package<T = undefined> = {
   config?: T
 }
 /**
- *  The Cetus clmmpool's position NFT.
+ *  The Magma clmmpool's position NFT.
  */
 export type Position = {
   /**

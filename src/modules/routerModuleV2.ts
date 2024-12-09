@@ -1,7 +1,7 @@
 import BN from 'bn.js'
 import Decimal from 'decimal.js'
 import { v4 as uuidv4 } from 'uuid'
-import { CetusClmmSDK } from '../sdk'
+import { MagmaClmmSDK } from '../sdk'
 import { IModule } from '../interfaces/IModule'
 import { PreSwapLpChangeParams, PreSwapWithMultiPoolParams } from '../types'
 import { TickMath, ZERO } from '../math'
@@ -44,9 +44,9 @@ export type AggregatorResult = {
 }
 
 export class RouterModuleV2 implements IModule {
-  protected _sdk: CetusClmmSDK
+  protected _sdk: MagmaClmmSDK
 
-  constructor(sdk: CetusClmmSDK) {
+  constructor(sdk: MagmaClmmSDK) {
     this._sdk = sdk
   }
 
@@ -57,7 +57,7 @@ export class RouterModuleV2 implements IModule {
   private calculatePrice(currentSqrtPrice: BN, fromDecimals: number, toDecimals: number, a2b: boolean, label: string): Decimal {
     const decimalA = a2b ? fromDecimals : toDecimals
     const decimalB = a2b ? toDecimals : fromDecimals
-    if (label === 'Cetus') {
+    if (label === 'Magma') {
       return TickMath.sqrtPriceX64ToPrice(currentSqrtPrice, decimalA, decimalB)
     }
 
@@ -89,7 +89,7 @@ export class RouterModuleV2 implements IModule {
               inputAmount: basePath.input_amount,
               feeRate: basePath.fee_rate,
               currentSqrtPrice: new BN(basePath.current_sqrt_price.toString()),
-              afterSqrtPrice: basePath.label === 'Cetus' ? new BN(basePath.after_sqrt_price.toString()) : ZERO,
+              afterSqrtPrice: basePath.label === 'Magma' ? new BN(basePath.after_sqrt_price.toString()) : ZERO,
               fromDecimal: basePath.from_decimal,
               toDecimal: basePath.to_decimal,
               currentPrice: this.calculatePrice(
@@ -115,18 +115,18 @@ export class RouterModuleV2 implements IModule {
       const config: AxiosRequestConfig = {
         ..._options,
         timeout: timeoutDuration,
-      };
-
-      const response = await axios(apiUrl, config);
-
-      if (response.status === 200) {
-        return this.parseJsonResult(response.data);
       }
 
-      return null;
+      const response = await axios(apiUrl, config)
+
+      if (response.status === 200) {
+        return this.parseJsonResult(response.data)
+      }
+
+      return null
     } catch (error) {
-      console.error(error);
-      return null;
+      console.error(error)
+      return null
     }
   }
 
@@ -218,7 +218,7 @@ export class RouterModuleV2 implements IModule {
 
           const path0: BasePath = {
             direction: path.a2b[0],
-            label: 'Cetus',
+            label: 'Magma',
             poolAddress: path.poolAddress[0],
             fromCoin: path.coinType[0],
             toCoin: path.coinType[1],
@@ -239,7 +239,7 @@ export class RouterModuleV2 implements IModule {
 
           const path1: BasePath = {
             direction: path.a2b[1],
-            label: 'Cetus',
+            label: 'Magma',
             poolAddress: path.poolAddress[1],
             fromCoin: path.coinType[1],
             toCoin: path.coinType[2],
@@ -262,7 +262,7 @@ export class RouterModuleV2 implements IModule {
 
           const path0: BasePath = {
             direction: path.a2b[0],
-            label: 'Cetus',
+            label: 'Magma',
             poolAddress: path.poolAddress[0],
             fromCoin: path.coinType[0],
             toCoin: path.coinType[1],
@@ -391,7 +391,7 @@ export class RouterModuleV2 implements IModule {
 
         const path0: BasePath = {
           direction: path.a2b[0],
-          label: 'Cetus',
+          label: 'Magma',
           poolAddress: path.poolAddress[0],
           fromCoin: path.coinType[0],
           toCoin: path.coinType[1],
@@ -412,7 +412,7 @@ export class RouterModuleV2 implements IModule {
 
         const path1: BasePath = {
           direction: path.a2b[1],
-          label: 'Cetus',
+          label: 'Magma',
           poolAddress: path.poolAddress[1],
           fromCoin: path.coinType[1],
           toCoin: path.coinType[2],
@@ -435,7 +435,7 @@ export class RouterModuleV2 implements IModule {
 
         const path0: BasePath = {
           direction: path.a2b[0],
-          label: 'Cetus',
+          label: 'Magma',
           poolAddress: path.poolAddress[0],
           fromCoin: path.coinType[0],
           toCoin: path.coinType[1],

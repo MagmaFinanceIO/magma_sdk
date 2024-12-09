@@ -5,7 +5,7 @@ import { getPackagerConfigs, PoolInfo, TokenConfigEvent, TokenInfo } from '../ty
 import { SuiResource, SuiAddressType } from '../types/sui'
 import { CachedContent, cacheTime24h, cacheTime5min, getFutureTime } from '../utils/cachedContent'
 import { extractStructTagFromType, normalizeCoinType } from '../utils/contracts'
-import { CetusClmmSDK } from '../sdk'
+import { MagmaClmmSDK } from '../sdk'
 import { IModule } from '../interfaces/IModule'
 import { getObjectPreviousTransactionDigest } from '../utils/objects'
 import { checkInvalidSuiAddress } from '../utils'
@@ -16,11 +16,11 @@ import { ClmmpoolsError, ConfigErrorCode } from '../errors/errors'
  * @deprecated TokenModule is no longer maintained. Please use ConfigModule instead
  */
 export class TokenModule implements IModule {
-  protected _sdk: CetusClmmSDK
+  protected _sdk: MagmaClmmSDK
 
   private readonly _cache: Record<string, CachedContent> = {}
 
-  constructor(sdk: CetusClmmSDK) {
+  constructor(sdk: MagmaClmmSDK) {
     this._sdk = sdk
   }
 

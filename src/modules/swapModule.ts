@@ -15,7 +15,7 @@ import { findAdjustCoin, TransactionUtil } from '../utils/transaction-util'
 import { extractStructTagFromType } from '../utils/contracts'
 import { ClmmFetcherModule } from '../types/sui'
 import { TickData, transClmmpoolDataWithoutTicks } from '../types/clmmpool'
-import { CetusClmmSDK } from '../sdk'
+import { MagmaClmmSDK } from '../sdk'
 import { IModule } from '../interfaces/IModule'
 import { SwapUtils } from '../math/swap'
 import { computeSwap } from '../math/clmm'
@@ -31,9 +31,9 @@ export const POOL_STRUCT = 'Pool'
  * Helper class to help interact with clmm pool swap with a swap router interface.
  */
 export class SwapModule implements IModule {
-  protected _sdk: CetusClmmSDK
+  protected _sdk: MagmaClmmSDK
 
-  constructor(sdk: CetusClmmSDK) {
+  constructor(sdk: MagmaClmmSDK) {
     this._sdk = sdk
   }
 
@@ -47,7 +47,7 @@ export class SwapModule implements IModule {
       const pathCount = item.basePaths.length
       if (pathCount > 0) {
         const path = item.basePaths[0]
-        const feeRate = path.label === 'Cetus' ? new Decimal(path.feeRate).div(10 ** 6) : new Decimal(path.feeRate).div(10 ** 9)
+        const feeRate = path.label === 'Magma' ? new Decimal(path.feeRate).div(10 ** 6) : new Decimal(path.feeRate).div(10 ** 9)
         const feeAmount = d(path.inputAmount)
           .div(10 ** path.fromDecimal)
           .mul(feeRate)
@@ -56,7 +56,7 @@ export class SwapModule implements IModule {
           const path2 = item.basePaths[1]
           const price1 = path.direction ? path.currentPrice : new Decimal(1).div(path.currentPrice)
           const price2 = path2.direction ? path2.currentPrice : new Decimal(1).div(path2.currentPrice)
-          const feeRate2 = path2.label === 'Cetus' ? new Decimal(path2.feeRate).div(10 ** 6) : new Decimal(path2.feeRate).div(10 ** 9)
+          const feeRate2 = path2.label === 'Magma' ? new Decimal(path2.feeRate).div(10 ** 6) : new Decimal(path2.feeRate).div(10 ** 9)
 
           const feeAmount2 = d(path2.outputAmount)
             .div(10 ** path2.toDecimal)
@@ -115,7 +115,12 @@ export class SwapModule implements IModule {
 
     const typeArguments = [params.coinTypeA, params.coinTypeB]
     for (let i = 0; i < params.poolAddresses.length; i += 1) {
-      const args = [tx.object(params.poolAddresses[i]), tx.pure.bool(params.a2b), tx.pure.bool(params.byAmountIn), tx.pure.u64(params.amount)]
+      const args = [
+        tx.object(params.poolAddresses[i]),
+        tx.pure.bool(params.a2b),
+        tx.pure.bool(params.byAmountIn),
+        tx.pure.u64(params.amount),
+      ]
       tx.moveCall({
         target: `${integrate.published_at}::${ClmmFetcherModule}::calculate_swap_result`,
         arguments: args,
@@ -245,7 +250,7 @@ export class SwapModule implements IModule {
   private transformSwapWithMultiPoolData(params: TransPreSwapWithMultiPoolParams, jsonData: any) {
     const { data } = jsonData
 
-    console.log("json data. ", data)
+    console.log('json data. ', data)
 
     const estimatedAmountIn = data.amount_in && data.fee_amount ? new BN(data.amount_in).add(new BN(data.fee_amount)).toString() : ''
     return {

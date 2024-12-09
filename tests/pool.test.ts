@@ -5,10 +5,10 @@ import { d } from '../src/utils/numbers'
 import { ClmmPoolUtil } from '../src/math/clmm'
 import 'isomorphic-fetch'
 import { printTransaction } from '../src/utils/transaction-util'
-import { asIntN, asUintN, initCetusSDK, isSortedSymbols } from '../src'
+import { asIntN, asUintN, initMagmaSDK, isSortedSymbols } from '../src'
 
 describe('Pool Module', () => {
-  const sdk = initCetusSDK({ network: 'mainnet' })
+  const sdk = initMagmaSDK({ network: 'mainnet' })
 
   test('getAllPools', async () => {
     const pools = await sdk.Pool.getPoolsWithPage([])
@@ -157,7 +157,7 @@ describe('Pool Module', () => {
       fix_amount_a: true,
       amount_a: '100000000',
       amount_b: '10000',
-      coinTypeA: '0x26b3bc67befc214058ca78ea9a2690298d731a2d4309485ec3d40198063c4abc::cetus::CETUS',
+      coinTypeA: '0x26b3bc67befc214058ca78ea9a2690298d731a2d4309485ec3d40198063c4abc::magma::MAGMA',
       coinTypeB: '0x0588cff9a50e0eaf4cd50d337c1a36570bc1517793fd3303e1513e8ad4d2aa96::usdc::USDC',
       slippage: 0.005,
       metadata_a: '0x7bf5b2682d4f6936370006037e8026bdf62798cdcc59e2453ee0093121952099',

@@ -9,7 +9,7 @@ import {
 } from './data/init_test_data'
 import 'isomorphic-fetch'
 import { printTransaction } from '../src/utils/transaction-util'
-import { adjustForSlippage, d, initCetusSDK, Percentage, TransactionUtil } from '../src'
+import { adjustForSlippage, d, initMagmaSDK, Percentage, TransactionUtil } from '../src'
 import { assert } from 'console'
 
 describe('Swap calculate Module', () => {
@@ -17,11 +17,11 @@ describe('Swap calculate Module', () => {
   let fullNodeUrl // optional
   let simulationAccount // optional
 
-  const sdk = initCetusSDK({ network: 'mainnet' })
+  const sdk = initMagmaSDK({ network: 'mainnet' })
 
   test('fetchTicksByContract', async () => {
     const tickdatas = await sdk.Pool.fetchTicks({
-      pool_id: "0xcf994611fd4c48e277ce3ffd4d4364c914af2c3cbb05f7bf6facd371de688630",
+      pool_id: '0xcf994611fd4c48e277ce3ffd4d4364c914af2c3cbb05f7bf6facd371de688630',
       coinTypeA: '0x5d4b302506645c37ff133b98c4b50a5ae14841659738d6d733d59d0d217a93bf::coin::COIN',
       coinTypeB: '0x2::sui::SUI',
     })
@@ -151,7 +151,7 @@ describe('Swap Module', () => {
     const amount = '10000000'
     const slippage = Percentage.fromDecimal(d(0.1))
 
-    const currentPool = await buildTestPool(sdk, "")
+    const currentPool = await buildTestPool(sdk, '')
     console.log('currentPool: ', currentPool)
 
     const decimalsA = 6

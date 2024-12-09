@@ -3,8 +3,8 @@ import { normalizeSuiObjectId } from '@mysten/sui/utils'
 import { Base64 } from 'js-base64'
 import { ClmmpoolsError, ConfigErrorCode } from '../errors/errors'
 import { IModule } from '../interfaces/IModule'
-import { CetusClmmSDK } from '../sdk'
-import { CetusConfigs, ClmmPoolConfig, CoinConfig, LaunchpadPoolConfig, getPackagerConfigs } from '../types'
+import { MagmaClmmSDK } from '../sdk'
+import { MagmaConfigs, ClmmPoolConfig, CoinConfig, LaunchpadPoolConfig, getPackagerConfigs } from '../types'
 import { SuiAddressType, SuiResource } from '../types/sui'
 import { CachedContent, cacheTime24h, cacheTime5min, getFutureTime } from '../utils/cachedContent'
 import { extractStructTagFromType, fixCoinType, normalizeCoinType } from '../utils/contracts'
@@ -14,11 +14,11 @@ import { getObjectFields, getObjectId, getObjectPreviousTransactionDigest, getOb
  * Helper class to help interact with clmm pool and coin and launchpad pool config.
  */
 export class ConfigModule implements IModule {
-  protected _sdk: CetusClmmSDK
+  protected _sdk: MagmaClmmSDK
 
   private readonly _cache: Record<string, CachedContent> = {}
 
-  constructor(sdk: CetusClmmSDK) {
+  constructor(sdk: MagmaClmmSDK) {
     this._sdk = sdk
   }
 
@@ -31,7 +31,7 @@ export class ConfigModule implements IModule {
    * @param {CoinConfig[]}coinList
    */
   setTokenListCache(coinList: CoinConfig[]) {
-    const { coin_list_handle } = getPackagerConfigs(this.sdk.sdkOptions.cetus_config)
+    const { coin_list_handle } = getPackagerConfigs(this.sdk.sdkOptions.magma_config)
     const cacheKey = `${coin_list_handle}_getCoinConfigs`
     const cacheData = this.getCache<CoinConfig[]>(cacheKey)
     const updatedCacheData = cacheData ? [...cacheData, ...coinList] : coinList
@@ -45,7 +45,7 @@ export class ConfigModule implements IModule {
    */
   async getTokenListByCoinTypes(coinTypes: SuiAddressType[]): Promise<Record<string, CoinConfig>> {
     const tokenMap: Record<string, CoinConfig> = {}
-    const { coin_list_handle } = getPackagerConfigs(this.sdk.sdkOptions.cetus_config)
+    const { coin_list_handle } = getPackagerConfigs(this.sdk.sdkOptions.magma_config)
     const cacheKey = `${coin_list_handle}_getCoinConfigs`
     const cacheData = this.getCache<CoinConfig[]>(cacheKey)
 
@@ -106,7 +106,7 @@ export class ConfigModule implements IModule {
    * @returns {Promise<CoinConfig[]>} Coin config list.
    */
   async getCoinConfigs(forceRefresh = false, transformExtensions = true): Promise<CoinConfig[]> {
-    const { coin_list_handle } = getPackagerConfigs(this.sdk.sdkOptions.cetus_config)
+    const { coin_list_handle } = getPackagerConfigs(this.sdk.sdkOptions.magma_config)
     const cacheKey = `${coin_list_handle}_getCoinConfigs`
     const cacheData = this.getCache<CoinConfig[]>(cacheKey, forceRefresh)
     if (cacheData) {
@@ -142,7 +142,7 @@ export class ConfigModule implements IModule {
    * @returns {Promise<CoinConfig>} Coin config.
    */
   async getCoinConfig(coinType: string, forceRefresh = false, transformExtensions = true): Promise<CoinConfig> {
-    const { coin_list_handle } = getPackagerConfigs(this.sdk.sdkOptions.cetus_config)
+    const { coin_list_handle } = getPackagerConfigs(this.sdk.sdkOptions.magma_config)
     const cacheKey = `${coin_list_handle}_${coinType}_getCoinConfig`
     const cacheData = this.getCache<CoinConfig>(cacheKey, forceRefresh)
     if (cacheData) {
@@ -200,7 +200,7 @@ export class ConfigModule implements IModule {
    * @returns
    */
   async getClmmPoolConfigs(forceRefresh = false, transformExtensions = true): Promise<ClmmPoolConfig[]> {
-    const { clmm_pools_handle } = getPackagerConfigs(this.sdk.sdkOptions.cetus_config)
+    const { clmm_pools_handle } = getPackagerConfigs(this.sdk.sdkOptions.magma_config)
     const cacheKey = `${clmm_pools_handle}_getClmmPoolConfigs`
     const cacheData = this.getCache<ClmmPoolConfig[]>(cacheKey, forceRefresh)
     if (cacheData) {
@@ -229,7 +229,7 @@ export class ConfigModule implements IModule {
   }
 
   async getClmmPoolConfig(poolAddress: string, forceRefresh = false, transformExtensions = true): Promise<ClmmPoolConfig> {
-    const { clmm_pools_handle } = getPackagerConfigs(this.sdk.sdkOptions.cetus_config)
+    const { clmm_pools_handle } = getPackagerConfigs(this.sdk.sdkOptions.magma_config)
     const cacheKey = `${poolAddress}_getClmmPoolConfig`
     const cacheData = this.getCache<ClmmPoolConfig>(cacheKey, forceRefresh)
     if (cacheData) {
@@ -265,7 +265,7 @@ export class ConfigModule implements IModule {
    * @returns
    */
   async getLaunchpadPoolConfigs(forceRefresh = false, transformExtensions = true): Promise<LaunchpadPoolConfig[]> {
-    const { launchpad_pools_handle } = getPackagerConfigs(this.sdk.sdkOptions.cetus_config)
+    const { launchpad_pools_handle } = getPackagerConfigs(this.sdk.sdkOptions.magma_config)
     const cacheKey = `${launchpad_pools_handle}_getLaunchpadPoolConfigs`
     const cacheData = this.getCache<LaunchpadPoolConfig[]>(cacheKey, forceRefresh)
     if (cacheData) {
@@ -294,7 +294,7 @@ export class ConfigModule implements IModule {
   }
 
   async getLaunchpadPoolConfig(poolAddress: string, forceRefresh = false, transformExtensions = true): Promise<LaunchpadPoolConfig> {
-    const { launchpad_pools_handle } = getPackagerConfigs(this.sdk.sdkOptions.cetus_config)
+    const { launchpad_pools_handle } = getPackagerConfigs(this.sdk.sdkOptions.magma_config)
     const cacheKey = `${poolAddress}_getLaunchpadPoolConfig`
     const cacheData = this.getCache<LaunchpadPoolConfig>(cacheKey, forceRefresh)
     if (cacheData) {
@@ -377,11 +377,11 @@ export class ConfigModule implements IModule {
    * @param forceRefresh Whether to force a refresh of the event.
    * @returns The token config event.
    */
-  async getCetusConfig(forceRefresh = false): Promise<CetusConfigs> {
-    const packageObjectId = this._sdk.sdkOptions.cetus_config.package_id
-    const cacheKey = `${packageObjectId}_getCetusConfig`
+  async getMagmaConfig(forceRefresh = false): Promise<MagmaConfigs> {
+    const packageObjectId = this._sdk.sdkOptions.magma_config.package_id
+    const cacheKey = `${packageObjectId}_getMagmaConfig`
 
-    const cacheData = this.getCache<CetusConfigs>(cacheKey, forceRefresh)
+    const cacheData = this.getCache<MagmaConfigs>(cacheKey, forceRefresh)
 
     if (cacheData !== undefined) {
       return cacheData
@@ -396,7 +396,7 @@ export class ConfigModule implements IModule {
 
     const previousTx = getObjectPreviousTransactionDigest(packageObject) as string
     const objects = await this._sdk.fullClient.queryEventsByPage({ Transaction: previousTx })
-    let tokenConfig: CetusConfigs = {
+    let tokenConfig: MagmaConfigs = {
       coin_list_id: '',
       launchpad_pools_id: '',
       clmm_pools_id: '',
@@ -429,14 +429,14 @@ export class ConfigModule implements IModule {
         }
       }
     }
-    tokenConfig = await this.getCetusConfigHandle(tokenConfig)
+    tokenConfig = await this.getMagmaConfigHandle(tokenConfig)
     if (tokenConfig.clmm_pools_id.length > 0) {
       this.updateCache(cacheKey, tokenConfig, cacheTime24h)
     }
     return tokenConfig
   }
 
-  private async getCetusConfigHandle(tokenConfig: CetusConfigs): Promise<CetusConfigs> {
+  private async getMagmaConfigHandle(tokenConfig: MagmaConfigs): Promise<MagmaConfigs> {
     const warpIds = [tokenConfig.clmm_pools_id, tokenConfig.coin_list_id, tokenConfig.launchpad_pools_id]
 
     const res = await this._sdk.fullClient.multiGetObjects({ ids: warpIds, options: { showContent: true } })
@@ -444,7 +444,7 @@ export class ConfigModule implements IModule {
     res.forEach((item) => {
       if (item.error != null || item.data?.content?.dataType !== 'moveObject') {
         throw new ClmmpoolsError(
-          `when getCetusConfigHandle get objects error: ${item.error}, please check the rpc and contracts address config.`,
+          `when getMagmaConfigHandle get objects error: ${item.error}, please check the rpc and contracts address config.`,
           ConfigErrorCode.InvalidConfigHandle
         )
       }

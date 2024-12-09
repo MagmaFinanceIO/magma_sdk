@@ -33,7 +33,7 @@ import {
   SuiObjectIdType,
   SuiResource,
 } from '../types/sui'
-import { CetusClmmSDK } from '../sdk'
+import { MagmaClmmSDK } from '../sdk'
 import { IModule } from '../interfaces/IModule'
 import { getObjectFields } from '../utils/objects'
 import { CollectFeesQuote } from '../math'
@@ -44,11 +44,11 @@ import { ClmmpoolsError, ConfigErrorCode, PoolErrorCode, UtilsErrorCode } from '
  * Helper class to help interact with clmm position with a position router interface.
  */
 export class PositionModule implements IModule {
-  protected _sdk: CetusClmmSDK
+  protected _sdk: MagmaClmmSDK
 
   private readonly _cache: Record<string, CachedContent> = {}
 
-  constructor(sdk: CetusClmmSDK) {
+  constructor(sdk: MagmaClmmSDK) {
     this._sdk = sdk
   }
 
@@ -61,8 +61,8 @@ export class PositionModule implements IModule {
    * @returns The full address of the Position type.
    */
   buildPositionType() {
-    const cetusClmm = this._sdk.sdkOptions.clmm_pool.package_id
-    return `${cetusClmm}::position::Position`
+    const magmaClmm = this._sdk.sdkOptions.clmm_pool.package_id
+    return `${magmaClmm}::position::Position`
   }
 
   /**

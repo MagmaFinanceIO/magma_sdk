@@ -1,5 +1,5 @@
-import { CetusClmmSDK } from '../sdk'
+import { MagmaClmmSDK } from '../sdk'
 
 export interface IModule {
-  readonly sdk: CetusClmmSDK
+  readonly sdk: MagmaClmmSDK
 }

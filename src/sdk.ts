@@ -7,7 +7,7 @@ import { SwapModule } from './modules/swapModule'
 import { TokenModule } from './modules/tokenModule'
 import { RouterModuleV2 } from './modules/routerModuleV2'
 import { CachedContent, cacheTime24h, extractStructTagFromType, getFutureTime, patchFixSuiObjectId } from './utils'
-import { CetusConfigs, ClmmConfig, CoinAsset, Package, SuiResource, SuiAddressType, TokenConfig } from './types'
+import { MagmaConfigs, ClmmConfig, CoinAsset, Package, SuiResource, SuiAddressType, TokenConfig } from './types'
 import { ConfigModule } from './modules'
 import { RpcModule } from './modules/rpcModule'
 
@@ -46,9 +46,9 @@ export type SdkOptions = {
   token?: Package<TokenConfig>
 
   /**
-   * Package containing Cetus protocol configurations.
+   * Package containing Magma protocol configurations.
    */
-  cetus_config: Package<CetusConfigs>
+  magma_config: Package<MagmaConfigs>
 
   /**
    * Package containing Cryptocurrency Liquidity Mining Module (CLMM) pool configurations.
@@ -82,9 +82,9 @@ export type SdkOptions = {
 }
 
 /**
- * The entry class of CetusClmmSDK, which is almost responsible for all interactions with CLMM.
+ * The entry class of MagmaClmmSDK, which is almost responsible for all interactions with CLMM.
  */
-export class CetusClmmSDK {
+export class MagmaClmmSDK {
   private readonly _cache: Record<string, CachedContent> = {}
 
   /**
@@ -124,7 +124,7 @@ export class CetusClmmSDK {
 
   /**
    * Provide interact with pool and token config (contain token base info for metadat).
-   * @deprecated Please use CetusConfig instead
+   * @deprecated Please use MagmaConfig instead
    */
   protected _token: TokenModule
 
@@ -242,15 +242,15 @@ export class CetusClmmSDK {
   }
 
   /**
-   * Getter for the CetusConfig property.
-   * @returns {ConfigModule} The CetusConfig property value.
+   * Getter for the MagmaConfig property.
+   * @returns {ConfigModule} The MagmaConfig property value.
    */
-  get CetusConfig(): ConfigModule {
+  get MagmaConfig(): ConfigModule {
     return this._config
   }
 
   /**
-   * @deprecated Token is no longer maintained. Please use CetusConfig instead
+   * @deprecated Token is no longer maintained. Please use MagmaConfig instead
    */
   get Token() {
     return this._token

@@ -1383,7 +1383,7 @@ export class TransactionUtil {
               toCoin = deepbookTxBuild.to as TransactionObjectArgument
             }
           }
-          if (basePath.label === 'Cetus') {
+          if (basePath.label === 'Magma') {
             if (i === 0) {
               if (splitPath.basePaths.length === 1) {
                 const clmmTxBuild = this.buildClmmBasePathTx(sdk, basePath, tx, param.byAmountIn, fromCoin, toCoin, false, partner)

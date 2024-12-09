@@ -1,5 +1,5 @@
 import { getFullnodeUrl } from '@mysten/sui/client'
-import CetusClmmSDK, { SdkOptions } from '../../src'
+import MagmaClmmSDK, { SdkOptions } from '../../src'
 
 const SDKConfig = {
   clmmConfig: {
@@ -8,7 +8,7 @@ const SDKConfig = {
     global_vault_id: '0xf78d2ee3c312f298882cb680695e5e8c81b1d441a646caccc058006c2851ddea',
     admin_cap_id: '0xd0accadc3d0b27f0cfaebe8e546968ac7874b9a9f5964669b4c9a7e1dcf80a28',
   },
-  cetusConfig: {
+  magmaConfig: {
     coin_list_id: '0x257eb2ba592a5480bba0a97d05338fab17cc3283f8df6998a0e12e4ab9b84478',
     launchpad_pools_id: '0xdc3a7bd66a6dcff73c77c866e87d73826e446e9171f34e1c1b656377314f94da',
     clmm_pools_id: '0x26c85500f5dd2983bf35123918a144de24e18936d0b234ef2b49fbb2d3d6307d',
@@ -29,10 +29,10 @@ export const clmmTestnet: SdkOptions = {
     package_id: '0x26b3bc67befc214058ca78ea9a2690298d731a2d4309485ec3d40198063c4abc',
     published_at: '0x26b3bc67befc214058ca78ea9a2690298d731a2d4309485ec3d40198063c4abc',
   },
-  cetus_config: {
+  magma_config: {
     package_id: '0xf5ff7d5ba73b581bca6b4b9fa0049cd320360abd154b809f8700a8fd3cfaf7ca',
     published_at: '0xf5ff7d5ba73b581bca6b4b9fa0049cd320360abd154b809f8700a8fd3cfaf7ca',
-    config: SDKConfig.cetusConfig,
+    config: SDKConfig.magmaConfig,
   },
 
   clmm_pool: {
@@ -52,8 +52,8 @@ export const clmmTestnet: SdkOptions = {
     package_id: '0x56d90d0c055edb534b11e7548270bb458fd47c69b77bf40c14d5eb00e6e6cf64',
     published_at: '0x56d90d0c055edb534b11e7548270bb458fd47c69b77bf40c14d5eb00e6e6cf64',
   },
-  aggregatorUrl: 'https://api-sui.devcetus.com/router',
-  swapCountUrl: 'https://api-sui.devcetus.com/v2/sui/swap/count',
+  aggregatorUrl: 'https://api-sui.devmagma.com/router',
+  swapCountUrl: 'https://api-sui.devmagma.com/v2/sui/swap/count',
 }
 
-export const TestnetSDK = new CetusClmmSDK(clmmTestnet)
+export const TestnetSDK = new MagmaClmmSDK(clmmTestnet)

@@ -4,7 +4,7 @@ import { Transaction } from '@mysten/sui/transactions'
 import { PreSwapWithMultiPoolParams } from '../types'
 import { checkInvalidSuiAddress, extractStructTagFromType } from '../utils'
 import { ClmmExpectSwapModule, ClmmIntegrateRouterModule, SuiAddressType } from '../types/sui'
-import { CetusClmmSDK } from '../sdk'
+import { MagmaClmmSDK } from '../sdk'
 import { IModule } from '../interfaces/IModule'
 import { U64_MAX, ZERO } from '../math'
 import { ClmmpoolsError, ConfigErrorCode, RouterErrorCode } from '../errors/errors'
@@ -135,9 +135,9 @@ export class RouterModule implements IModule {
 
   private poolAddressMap: Map<string, Map<number, string>>
 
-  protected _sdk: CetusClmmSDK
+  protected _sdk: MagmaClmmSDK
 
-  constructor(sdk: CetusClmmSDK) {
+  constructor(sdk: MagmaClmmSDK) {
     this.pathProviders = []
     this.coinProviders = {
       coins: [],

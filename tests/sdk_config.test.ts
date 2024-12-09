@@ -13,10 +13,10 @@ describe('sdk config', () => {
     }
   })
 
-  test('cetusConfig', async () => {
+  test('magmaConfig', async () => {
     try {
-      const cetusConfig = await sdk.CetusConfig.getCetusConfig()
-      console.log('cetusConfig: ', cetusConfig)
+      const magmaConfig = await sdk.MagmaConfig.getMagmaConfig()
+      console.log('magmaConfig: ', magmaConfig)
     } catch (error) {
       console.log(error)
     }
@@ -37,9 +37,9 @@ describe('warp sdk config', () => {
     }
 
     try {
-      if (sdkOptions.cetus_config.package_id.length > 0) {
-        const cetusConfig = await sdk.CetusConfig.getCetusConfig()
-        config.cetus_config.config = cetusConfig
+      if (sdkOptions.magma_config.package_id.length > 0) {
+        const magmaConfig = await sdk.MagmaConfig.getMagmaConfig()
+        config.magma_config.config = magmaConfig
       }
     } catch (error) {
       console.log('tokenConfig', error)

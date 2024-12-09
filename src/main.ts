@@ -1,5 +1,5 @@
-import { CetusClmmSDK, SdkOptions } from './sdk'
+import { MagmaClmmSDK, SdkOptions } from './sdk'
 
-export { CetusClmmSDK, SdkOptions }
+export { MagmaClmmSDK, SdkOptions }
 
-export default CetusClmmSDK
+export default MagmaClmmSDK

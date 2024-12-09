@@ -6,7 +6,7 @@ import { ClmmFetcherModule, ClmmIntegratePoolV2Module, ClmmIntegratePoolV3Module
 import { getRewardInTickRange } from '../utils/tick'
 import { MathUtil, ONE, ZERO } from '../math/utils'
 import { TickData } from '../types/clmmpool'
-import { CetusClmmSDK } from '../sdk'
+import { MagmaClmmSDK } from '../sdk'
 import { IModule } from '../interfaces/IModule'
 import { CollectRewarderParams, getPackagerConfigs, Pool, Position, PositionReward, Rewarder, RewarderAmountOwed } from '../types'
 import { CollectFeesQuote } from '../math'
@@ -37,11 +37,11 @@ export type PosRewarderResult = {
  * Helper class to help interact with clmm position rewaeder with a rewaeder router interface.
  */
 export class RewarderModule implements IModule {
-  protected _sdk: CetusClmmSDK
+  protected _sdk: MagmaClmmSDK
 
   private growthGlobal: BN[]
 
-  constructor(sdk: CetusClmmSDK) {
+  constructor(sdk: MagmaClmmSDK) {
     this._sdk = sdk
     this.growthGlobal = [ZERO, ZERO, ZERO]
   }

@@ -1,5 +1,5 @@
 import { getFullnodeUrl } from '@mysten/sui/client'
-import CetusClmmSDK, { SdkOptions } from '../main'
+import MagmaClmmSDK, { SdkOptions } from '../main'
 
 const SDKConfig = {
   clmmConfig: {
@@ -8,7 +8,7 @@ const SDKConfig = {
     global_vault_id: '0xce7bceef26d3ad1f6d9b6f13a953f053e6ed3ca77907516481ce99ae8e588f2b',
     admin_cap_id: '0x89c1a321291d15ddae5a086c9abc533dff697fde3d89e0ca836c41af73e36a75',
   },
-  cetusConfig: {
+  magmaConfig: {
     coin_list_id: '0x8cbc11d9e10140db3d230f50b4d30e9b721201c0083615441707ffec1ef77b23',
     launchpad_pools_id: '0x1098fac992eab3a0ab7acf15bb654fc1cf29b5a6142c4ef1058e6c408dd15115',
     clmm_pools_id: '0x15b6a27dd9ae03eb455aba03b39e29aad74abd3757b8e18c0755651b2ae5b71e',
@@ -26,10 +26,10 @@ export const clmmMainnet: SdkOptions = {
   simulationAccount: {
     address: '0x0000000000000000000000000000000000000000000000000000000000000000',
   },
-  cetus_config: {
+  magma_config: {
     package_id: '0x95b8d278b876cae22206131fb9724f701c9444515813042f54f0a426c9a3bc2f',
     published_at: '0x95b8d278b876cae22206131fb9724f701c9444515813042f54f0a426c9a3bc2f',
-    config: SDKConfig.cetusConfig,
+    config: SDKConfig.magmaConfig,
   },
   clmm_pool: {
     package_id: '0x1eabed72c53feb3805120a081dc15963c204dc8d091542592abaf7a35689b2fb',
@@ -48,8 +48,8 @@ export const clmmMainnet: SdkOptions = {
     package_id: '0xac95e8a5e873cfa2544916c16fe1461b6a45542d9e65504c1794ae390b3345a7',
     published_at: '0xac95e8a5e873cfa2544916c16fe1461b6a45542d9e65504c1794ae390b3345a7',
   },
-  aggregatorUrl: 'https://api-sui.cetus.zone/router',
-  swapCountUrl: 'https://api-sui.cetus.zone/v2/sui/swap/count',
+  aggregatorUrl: 'https://api-sui.magma.zone/router',
+  swapCountUrl: 'https://api-sui.magma.zone/v2/sui/swap/count',
 }
 
 /**
@@ -58,15 +58,12 @@ export const clmmMainnet: SdkOptions = {
  * @param simulationAccount. If provided, it will be used as the simulation account address.
  * @returns
  */
-export function initMainnetSDK(
-  fullNodeUrl?: string,
-  simulationAccount?: string
-): CetusClmmSDK {
+export function initMainnetSDK(fullNodeUrl?: string, simulationAccount?: string): MagmaClmmSDK {
   if (fullNodeUrl) {
     clmmMainnet.fullRpcUrl = fullNodeUrl
   }
   if (simulationAccount) {
     clmmMainnet.simulationAccount.address = simulationAccount
   }
-  return new CetusClmmSDK(clmmMainnet)
+  return new MagmaClmmSDK(clmmMainnet)
 }
