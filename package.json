@@ -1,6 +1,6 @@
 {
   "name": "@magmaprotocol/magma-sui-clmm-sdk",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "SDK for magma swap and liquidity",
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -16,8 +16,20 @@
     "_build:browser": "tsup --platform browser --format iife --global-name magmaAptosSDK --minify",
     "_build:node": "tsup --format cjs,esm --dts",
     "build:doc": "npx typedoc",
-    "publish:test": "node version.js && npm publish --tag experimental"
+    "publish:test": "node version.js && npm publish --tag experimental",
+    "prepublishOnly": "rm -rf dist/ && npm run build:tsup"
   },
+  "files": [
+    ".editorconfig",
+    "LICENSE",
+    "README.md",
+    "dist",
+    "jest.config.js",
+    "package.json",
+    "tsconfig.tsbuildinfo",
+    "tsup.config.js",
+    "version.js"
+  ],
   "repository": {
     "type": "git",
     "url": ""
